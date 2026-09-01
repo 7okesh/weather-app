@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-build:
+    name: Test and Build Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Build Test
+        env:
+          CI: false
+          REACT_APP_WEATHER_API_KEY: fe4feefa8543e06d4f3c66d92c61b69c
+        run: npm run build
